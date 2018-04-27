@@ -1,6 +1,6 @@
 // +build !go1.7
 
-package httprouter
+package hrms
 
 import "net/http"
 
