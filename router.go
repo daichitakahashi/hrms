@@ -74,7 +74,7 @@
 //  // by the index of the parameter. This way you can also get the name (key)
 //  thirdKey   := ps[2].Key   // the name of the 3rd parameter
 //  thirdValue := ps[2].Value // the value of the 3rd parameter
-package hrms
+package httprouter
 
 import (
 	"net/http"
@@ -159,6 +159,11 @@ type Router struct {
 	// The handler can be used to keep your server from crashing because of
 	// unrecovered panics.
 	PanicHandler func(http.ResponseWriter, *http.Request, interface{})
+
+	// ------------------------------------------------------------------------------------------------------
+	// daichitakahashi added
+	middlewares []func(Handler) Handler
+	// ------------------------------------------------------------------------------------------------------
 }
 
 // Make sure the Router conforms with the http.Handler interface
@@ -331,7 +336,9 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 
 	if root := r.trees[req.Method]; root != nil {
 		if handle, ps, tsr := root.getValue(path); handle != nil {
-			handle(w, req, ps)
+			// ------------------------------------------------------------------------------------------------------
+			// daichitakahashi added
+			r.applyMiddlewares(handle).Handle(w, req, ps)
 			return
 		} else if req.Method != "CONNECT" && path != "/" {
 			code := 301 // Permanent redirect, request with GET method
