@@ -8,7 +8,7 @@ import (
 	"github.com/daichitakahashi/hrms"
 )
 
-// ParamRegexp is
+// ParamRegexp provides parameter check
 func ParamRegexp(patterns map[string]string, failedRedirect string) func(hrms.Handler) hrms.Handler {
 
 	// for server: regexp.MustCompile here
