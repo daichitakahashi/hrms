@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/daichitakahashi/httprouter"
+	"github.com/daichitakahashi/hrms"
 )
 
 // ParamCheck is

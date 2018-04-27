@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be found
 // in the LICENSE file.
 
-// Package httprouter is a trie based high performance HTTP request router.
+// Package hrms is a trie based high performance HTTP request router.
 //
 // A trivial example is:
 //
@@ -74,7 +74,7 @@
 //  // by the index of the parameter. This way you can also get the name (key)
 //  thirdKey   := ps[2].Key   // the name of the 3rd parameter
 //  thirdValue := ps[2].Value // the value of the 3rd parameter
-package httprouter
+package hrms
 
 import (
 	"net/http"
