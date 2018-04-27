@@ -6,15 +6,48 @@ import (
 	"github.com/daichitakahashi/hrms"
 )
 
-// ParamCheck is
-func ParamCheck() {}
+// accept characters for pattern matching
+const (
+	upper        = 'W'
+	lower        = 'w'
+	number       = 'n'
+	hyphen       = '-'
+	underscore   = '_'
+	period       = '.'
+	tilda        = '~'
+	beginPattern = '('
+	endPattern   = ')'
+)
 
-// Example is
-func Example(next httprouter.Handler) httprouter.Handler {
-	fn := func(w http.ResponseWriter, r *http.Request, params httprouter.Params) { // これは Handle
-		//
-		next.Handle(w, r, params)
+// ParamCheck is
+func ParamCheck(patterns map[string]string) func(hrms.Handler) hrms.Handler {
+
+	middleware := func(next hrms.Handler) hrms.Handler {
+		fn := func(w http.ResponseWriter, r *http.Request, params hrms.Params) {
+
+			for _, prm := range params {
+				pattern, ok := patterns[prm.Key]
+				if !ok {
+					continue
+				}
+				//pattern check
+				generateChecker(pattern)
+			}
+
+			next.Handle(w, r, params)
+		}
+
+		return hrms.Handle(fn)
 	}
 
-	return httprouter.Handle(fn) //これはキャスト
+	return middleware
+}
+
+type checker struct {
+	check int
+}
+
+func generateChecker(pattern string) bool {
+	//
+	return true
 }
