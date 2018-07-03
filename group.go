@@ -14,13 +14,12 @@ type GroupRouter struct {
 }
 
 // Group is
-func (g *GroupRouter) Group(_path string) *GroupRouter { // その他見直し==============================
-	newRouter := &GroupRouter{
+func (g *GroupRouter) Group(_path string) *GroupRouter {
+	return &GroupRouter{
 		router:   g.router,
 		base:     path.Join(g.base, _path),
 		ancestor: g,
 	}
-	return newRouter
 }
 
 // Group is
@@ -53,7 +52,7 @@ func (g *GroupRouter) doHandle(handle Handle) Handle {
 }
 
 func (g *GroupRouter) applyAncestorsMiddlewares(endpoint Handler) Handler {
-	if g.ancestor != nil {
+	if g.ancestor == nil {
 		return endpoint
 	}
 	return g.ancestor.applyAncestorsMiddlewares(
@@ -63,28 +62,16 @@ func (g *GroupRouter) applyAncestorsMiddlewares(endpoint Handler) Handler {
 
 // GET is
 func (g *GroupRouter) GET(_path string, handle Handle) { // 呼ばれるたびにミドルウェアを縮約するハンドラを生成、登録する
-	g.router.GET(path.Join(g.base, _path), handle)
-	// g.router.GET(g.base+_path, handle)
+	g.router.GET(
+		path.Join(g.base, _path),
+		g.doHandle(handle),
+	)
 }
 
 // POST is
 func (g *GroupRouter) POST(_path string, handle Handle) {
-	g.router.POST(path.Join(g.base, _path), handle)
+	g.router.POST(
+		path.Join(g.base, _path),
+		g.doHandle(handle),
+	)
 }
-
-/*
-func (g *GroupRouter) moreMiddlewares() []func(Handler) Handler {
-	if g.ancestor != nil {
-		return append(g.ancestor.middlewares, g.middlewares)
-	}
-	return g.middlewares
-}*/
-
-/*
-
-func (g *GroupRouter) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	g.router.middlewares = append(g.router.middlewares, g.middlewares...) // これだと、サーバとしての起動時にどんどんミドルウェアが溜まってしまう
-	g.router.ServeHTTP(w, r)
-}
-
-*/

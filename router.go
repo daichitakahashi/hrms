@@ -338,7 +338,6 @@ func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 		if handle, ps, tsr := root.getValue(path); handle != nil {
 			// ------------------------------------------------------------------------------------------------------
 			// daichitakahashi added
-			// r.applyMiddlewares(handle).Handle(w, req, ps)
 			applyMiddlewares(handle, r.middlewares).Handle(w, req, ps)
 			// ------------------------------------------------------------------------------------------------------
 			return
