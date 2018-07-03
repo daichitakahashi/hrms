@@ -14,6 +14,14 @@ type GroupRouter struct {
 }
 
 // Group is
+func (r *Router) Group(_path string) *GroupRouter {
+	return &GroupRouter{
+		router: r,
+		base:   _path,
+	}
+}
+
+// Group is
 func (g *GroupRouter) Group(_path string) *GroupRouter {
 	return &GroupRouter{
 		router:   g.router,
@@ -22,12 +30,21 @@ func (g *GroupRouter) Group(_path string) *GroupRouter {
 	}
 }
 
-// Group is
-func (r *Router) Group(path string) *GroupRouter {
-	return &GroupRouter{
+// RegisterGroup is
+func (r *Router) RegisterGroup(_path string, register func(*GroupRouter)) {
+	register(&GroupRouter{
 		router: r,
-		base:   path,
-	}
+		base:   _path,
+	})
+}
+
+// RegisterGroup is
+func (g *GroupRouter) RegisterGroup(_path string, register func(*GroupRouter)) {
+	register(&GroupRouter{
+		router:   g.router,
+		base:     path.Join(g.base, _path),
+		ancestor: g,
+	})
 }
 
 // Use is
