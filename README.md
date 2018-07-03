@@ -1,3 +1,9 @@
+#hrms
+**h**ttp**r**outer with **m**iddleware**s**
+
+(in progress)
+
+<!--
 # HttpRouter [![Build Status](https://travis-ci.org/julienschmidt/httprouter.svg?branch=master)](https://travis-ci.org/julienschmidt/httprouter) [![Coverage Status](https://coveralls.io/repos/github/julienschmidt/httprouter/badge.svg?branch=master)](https://coveralls.io/github/julienschmidt/httprouter?branch=master) [![GoDoc](https://godoc.org/github.com/julienschmidt/httprouter?status.svg)](http://godoc.org/github.com/julienschmidt/httprouter)
 
 HttpRouter is a lightweight high performance HTTP request router (also called *multiplexer* or just *mux* for short) for [Go](https://golang.org/).
@@ -264,3 +270,5 @@ If the HttpRouter is a bit too minimalistic for you, you might try one of the fo
 * [Roxanna](https://github.com/iamthemuffinman/Roxanna): An amalgamation of httprouter, better logging, and hot reload
 * [siesta](https://github.com/VividCortex/siesta): Composable HTTP handlers with contexts
 * [xmux](https://github.com/rs/xmux): xmux is a httprouter fork on top of xhandler (net/context aware)
+
+-->
