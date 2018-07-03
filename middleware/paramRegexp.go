@@ -9,7 +9,7 @@ import (
 )
 
 // ParamRegexp provides parameter check
-func ParamRegexp(patterns map[string]string, failedRedirect string) func(hrms.Handler) hrms.Handler {
+func ParamRegexp(patterns map[string]string, failedHandler hrms.Handle) func(hrms.Handler) hrms.Handler {
 
 	// for server: regexp.MustCompile here
 
@@ -28,7 +28,9 @@ func ParamRegexp(patterns map[string]string, failedRedirect string) func(hrms.Ha
 					fmt.Println(w, "regex error")
 				}
 				if !regex.MatchString(prm.Value) {
-					http.Redirect(w, r, failedRedirect, 301) //http.StatusSeeOther)
+					// http.Redirect(w, r, failedRedirect, 301) //http.StatusSeeOther)
+					failedHandler(w, r, params)
+					return
 				}
 
 			}
